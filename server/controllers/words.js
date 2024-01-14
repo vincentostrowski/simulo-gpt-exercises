@@ -3,7 +3,7 @@ const QuestionSet = require("../models/questionSet");
 const axios = require("axios");
 const createQuestions = require("../utils/createQuestions");
 
-const checkWordExists = async (word) => {
+/* const checkWordExists = async (word) => {
   try {
     const response = await axios.get(
       //whatever dictionary api I use
@@ -14,16 +14,16 @@ const checkWordExists = async (word) => {
     console.error(error);
     return false;
   }
-};
+}; */
 
 const createWord = async (req, res) => {
   //checking if word exists in dictionary API
   //done in the backend to prevent user from potentially adding non-words
-  const wordExists = await checkWordExists(req.body.word);
+  /*  const wordExists = await checkWordExists(req.body.word);
 
   if (!wordExists) {
     return res.status(400).json({ message: "Word does not exist" });
-  }
+  } */
 
   //Find questionSet for the word
   //if not yet made, make one
@@ -99,23 +99,12 @@ const getDueWord = async (req, res) => {
 
   //if GPT not needed
   for (let i = 0; i < 5; i++) {
-    questions.push(questionSet.questions[word.questionIndex + i]);
+    if (word.questionIndex + i < questionSet.questions.length) {
+      questions.push(questionSet.questions[word.questionIndex + i]);
+    }
   }
 
-  word.questionIndex += 5;
-  await word.save();
   res.status(200).json({ word, questions });
-
-  //make more gpt generated questions if user has index reaches end of
-  if (questionSet.questions.length - word.questionIndex < 5) {
-    const moreQuestions = await createQuestions(
-      req.body.word,
-      35,
-      questionSet.questions
-    );
-    questionSet.questions.push(...moreQuestions);
-    await questionSet.save();
-  }
 };
 
 const getQueuedNewWords = async (req, res) => {
@@ -180,6 +169,20 @@ const updateWord = async (req, res) => {
   const previousDate = new Date(word.due);
   previousDate.setTime(previousDate.getTime() + intervalMilliseconds);
   word.due = previousDate;
+
+  //only when user uses questions from card should index move on to newer questions
+  word.questionIndex += 5;
+  //make more gpt generated questions if user has index reaches end of
+  const questionSet = await QuestionSet.findById(word.questions);
+  if (questionSet.questions.length - word.questionIndex <= 5) {
+    const moreQuestions = await createQuestions(
+      req.body.word,
+      35,
+      questionSet.questions
+    );
+    questionSet.questions.push(...moreQuestions);
+    await questionSet.save();
+  }
 
   word.save();
 

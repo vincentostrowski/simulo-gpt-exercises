@@ -6,7 +6,6 @@ require("express-async-errors");
 const mongoose = require("mongoose");
 const config = require("./utils/config");
 const middleware = require("./utils/middleware");
-const cors = require("cors");
 const usersRouter = require("./routes/users");
 const wordsRouter = require("./routes/words");
 

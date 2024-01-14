@@ -1,4 +1,4 @@
-const openai = require("../config/openai");
+const openai = require("../utils/openai");
 
 const createQuestions = async (word, amount, prev = []) => {
   const questions = [];
@@ -29,7 +29,7 @@ const createQuestions = async (word, amount, prev = []) => {
     max_tokens: 1000,
   });
 
-  const responseString = response.data.choices[0].text;
+  const responseString = response.choices[0].message.content;
 
   // Regular expression to extract fill-in-the-blank questions
   const regex = /\d+\.\s(.+)/g;

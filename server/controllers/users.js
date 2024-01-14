@@ -1,8 +1,8 @@
 const User = require("../models/user");
 const admin = require("../utils/firebaseAdmin");
 
-const createUser = async (req, res) => {
-  const { username, name, email, password } = request.body;
+const createUser = async (request, response) => {
+  const { username, email, password } = request.body;
 
   //creating both user in Mongo & FireBase
   try {
@@ -17,7 +17,6 @@ const createUser = async (req, res) => {
     try {
       const user = new User({
         username,
-        name,
         email,
         firebaseId: userRecord.uid,
       });

@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const userSchema = mongoose.Schema({
   username: { type: String, required: true },
   fireBaseId: { type: String, required: true },
+  email: { type: String, required: true },
 });
 
 userSchema.set("toJSON", {
