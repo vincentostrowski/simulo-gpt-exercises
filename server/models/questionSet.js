@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const questionSetSchema = mongoose.Schema({
+  word: { type: String, required: true },
   questions: [{ type: String }],
 });
 

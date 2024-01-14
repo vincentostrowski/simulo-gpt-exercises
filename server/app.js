@@ -17,9 +17,9 @@ app.use(express.json());
 app.use(express.static("dist"));
 
 app.use(middleware.lowercaseFields);
-app.use("/api/users", usersRouter);
+app.use("/api", usersRouter);
 app.use(middleware.checkFirebaseToken);
-app.use("/api/users/words", wordsRouter);
+app.use("/api", wordsRouter);
 
 app.use(middleware.unkownEndpoint);
 app.use(middleware.errorHandler);
