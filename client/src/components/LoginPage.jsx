@@ -27,7 +27,7 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <form
-        className="bg-sky-950 p-6 rounded-full shadow-md max-w-lg p-20"
+        className="bg-sky-950 p-9 rounded-full shadow-md p-20"
         onSubmit={(e) => {
           e.preventDefault();
           signInWithEmail(email, password);
@@ -37,22 +37,24 @@ const Login = () => {
         <h2 className="mb-4 text-xl font-bold text-gray-500 text-center">
           Login
         </h2>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-5/6 p-2 mb-4 border border-gray-300 rounded-full"
-          placeholder="Email address"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-5/6 p-2 mb-4 border border-gray-300 rounded-full"
-          placeholder="Password"
-        />
+        <div className="flex flex-col items-center w-96">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-5/6 p-2 mb-4 border border-gray-300 rounded-full"
+            placeholder="Email address"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-5/6 p-2 mb-4 border border-gray-300 rounded-full"
+            placeholder="Password"
+          />
+        </div>
         <div className="flex justify-center">
           <button
             type="submit"

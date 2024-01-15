@@ -1,16 +1,20 @@
+import { useState } from "react";
+
 const WordDisplayController = ({
   setRevealWord,
-  setFirstLetter,
+  setRevealLetter,
   word,
   revealWord,
   className,
 }) => {
+  const [letterIndex, setLetterIndex] = useState(0);
+
   return (
     <div className={`${className} flex gap-5 w-full justify-center`}>
       <button
         onClick={() => {
           setRevealWord(true);
-          setFirstLetter(false);
+          setRevealLetter(false);
         }}
         className="bg-sky-950 text-gray-200 py-1 px-3 w-40 rounded-full"
       >
@@ -19,8 +23,16 @@ const WordDisplayController = ({
       <button
         onClick={() => {
           if (!revealWord) {
-            setFirstLetter(word.word.charAt(0).toUpperCase());
-            setRevealWord(false);
+            setRevealLetter(
+              (prev) => prev + word.word.charAt(letterIndex).toUpperCase()
+            );
+            setLetterIndex(letterIndex + 1);
+            if (letterIndex === word.word.length - 1) {
+              setRevealWord(true);
+              setRevealLetter("");
+            } else {
+              setRevealWord(false);
+            }
           }
         }}
         className="bg-sky-950 text-gray-200 py-1 px-3 w-40 rounded-full"

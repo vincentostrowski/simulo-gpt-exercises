@@ -29,41 +29,43 @@ const SignUp = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <form
-        className="bg-sky-950 p-6 rounded-full shadow-md max-w-lg p-20"
+        className="bg-sky-950 p-6 rounded-full shadow-md p-20"
         onSubmit={handleSubmit}
       >
         <img src={Logo} alt="logo" className="w-32 h-32 mx-auto mb-4" />
         <h2 className="mb-4 text-xl font-bold text-gray-500 text-center">
           Create Account
         </h2>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full p-2 mb-4 border border-gray-300 rounded-full"
-          placeholder="Email"
-        />
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          className="w-full p-2 mb-4 border border-gray-300 rounded-full"
-          placeholder="Username"
-        />
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-full p-2 mb-4 border border-gray-300 rounded-full"
-          placeholder="Password"
-          minLength="6"
-        />
+        <div className="flex flex-col items-center w-96">
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-5/6 p-2 mb-4 border border-gray-300 rounded-full"
+            placeholder="Email"
+          />
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="w-5/6 p-2 mb-4 border border-gray-300 rounded-full"
+            placeholder="Username"
+          />
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-5/6 p-2 mb-4 border border-gray-300 rounded-full"
+            placeholder="Password"
+            minLength="6"
+          />
+        </div>
         <div className="flex justify-center">
           <button
             type="submit"

@@ -8,9 +8,9 @@ import WordDisplayController from "./WordDisplayController";
 import DefinitionDisplay from "./DefinitionDisplay";
 
 const Due = () => {
-  const [word, setWord] = useState(null);
+  const [word, setWord] = useState("");
   const [questions, setQuestions] = useState([]);
-  const [firstLetter, setFirstLetter] = useState(null);
+  const [revealLetter, setRevealLetter] = useState("");
   const [revealWord, setRevealWord] = useState(false);
   const [revealDefinition, setRevealDefinition] = useState(false);
   const [cardToggle, setCardToggle] = useState(false);
@@ -30,7 +30,7 @@ const Due = () => {
 
   const onEaseSelection = () => {
     setRevealWord(false);
-    setFirstLetter(null);
+    setRevealLetter("");
     setWord(null);
     setQuestions(null);
     setCardToggle(!cardToggle);
@@ -48,13 +48,13 @@ const Due = () => {
           <WordDisplay
             revealWord={revealWord}
             word={word}
-            firstLetter={firstLetter}
+            revealLetter={revealLetter}
             className=""
           />
           <QuestionList questions={questions} className="" />
           <WordDisplayController
             setRevealWord={setRevealWord}
-            setFirstLetter={setFirstLetter}
+            setRevealLetter={setRevealLetter}
             word={word}
             revealWord={revealWord}
             className=""

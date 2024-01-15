@@ -1,4 +1,4 @@
-const WordDisplay = ({ revealWord, word, firstLetter, className }) => {
+const WordDisplay = ({ revealWord, word, revealLetter, className }) => {
   const colorClasses = {
     red: "text-red-600",
     orange: "text-orange-600",
@@ -30,7 +30,7 @@ const WordDisplay = ({ revealWord, word, firstLetter, className }) => {
             ))}
         </h1>
       )}
-      {firstLetter && <h1>{firstLetter}</h1>}
+      {revealLetter && <h1>{revealLetter}</h1>}
     </div>
   );
 };
