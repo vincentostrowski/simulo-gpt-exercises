@@ -98,7 +98,7 @@ const getDueWord = async (req, res) => {
   const questionSet = await QuestionSet.findById(word.questions);
 
   //if GPT not needed
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 3; i++) {
     if (word.questionIndex + i < questionSet.questions.length) {
       questions.push(questionSet.questions[word.questionIndex + i]);
     }
@@ -112,14 +112,16 @@ const getQueuedNewWords = async (req, res) => {
   const words = await Word.find({
     user: req.user._id,
     new: true,
-  });
+  }).sort({ newOrder: 1 });
+
+  res.status(200).json(words);
 };
 
 const updateWord = async (req, res) => {
   const word = await Word.findById(req.params.id);
 
   //if word is new and queue order is being updated
-  if ((req.body.ease = undefined)) {
+  if (req.body.ease === undefined) {
     const newPosition = req.body.newPosition;
 
     const oldPosition = card.newOrder;
@@ -151,8 +153,18 @@ const updateWord = async (req, res) => {
   }
 
   //if word is new
-  word.new = false;
-  word.newOrder = null;
+  if (word.new === true) {
+    word.new = false;
+    word.newOrder = null;
+    await Word.updateMany(
+      {
+        user: req.user._id,
+        new: true,
+        newOrder: { $type: "number" },
+      },
+      { $inc: { newOrder: -1 } }
+    );
+  }
 
   word.lastAttempt = new Date();
 
@@ -161,17 +173,17 @@ const updateWord = async (req, res) => {
       word.interval *= 2;
       break;
     case "hard":
-      word.inerval *= 0.5;
+      word.interval = Math.max(1, Math.floor(word.interval / 2));
+      break;
   }
 
   //make word.due equal to previous date + amount of days given by word.interval
   const intervalMilliseconds = word.interval * 24 * 60 * 60 * 1000;
-  const previousDate = new Date(word.due);
-  previousDate.setTime(previousDate.getTime() + intervalMilliseconds);
-  word.due = previousDate;
+  let currentDate = new Date();
+  word.due = new Date(currentDate.getTime() + intervalMilliseconds);
 
   //only when user uses questions from card should index move on to newer questions
-  word.questionIndex += 5;
+  word.questionIndex += 3;
   //make more gpt generated questions if user has index reaches end of
   const questionSet = await QuestionSet.findById(word.questions);
   if (questionSet.questions.length - word.questionIndex <= 5) {

@@ -43,4 +43,4 @@ const updateWord = async (id, ease) => {
   );
 };
 
-export { getAll, getDue, getNewQueued, createWord, updateWord };
+export default { getAll, getDue, getNewQueued, createWord, updateWord };

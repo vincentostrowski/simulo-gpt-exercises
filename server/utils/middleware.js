@@ -2,9 +2,9 @@ const admin = require("../utils/firebaseAdmin");
 const User = require("../models/user");
 
 const errorHandler = (error, request, response, next) => {
-  if (process.env.NODE_ENV !== "test") {
-    console.error(error.message);
-  }
+  console.log("errorHandler called");
+  console.error(error.message);
+  console.log(error);
 
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
@@ -33,7 +33,7 @@ const checkFirebaseToken = async (req, res, next) => {
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
 
-    const user = await User.findOne({ firebaseId: decodedToken.uid });
+    const user = await User.findOne({ fireBaseId: decodedToken.uid });
 
     if (!user) {
       return res.status(404).send("User not found in MongoDB.");
@@ -56,6 +56,10 @@ const lowercaseFields = (req, res, next) => {
 
   if (req.body.email) {
     req.body.email = req.body.email.toLowerCase();
+  }
+
+  if (req.body.word) {
+    req.body.word = req.body.word.toLowerCase();
   }
 
   next();
