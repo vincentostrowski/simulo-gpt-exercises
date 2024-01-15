@@ -61,7 +61,7 @@ const SignUp = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-5/6 p-2 mb-4 border border-gray-300 rounded-full"
+            className="w-3/4 p-2 mb-4 border border-gray-300 rounded-full"
             placeholder="Password"
             minLength="6"
           />
@@ -69,7 +69,7 @@ const SignUp = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="w-1/2 p-2 text-white bg-color1 rounded-full hover:bg-blue-600"
+            className="w-1/3 p-2 text-white bg-color1 rounded-full hover:bg-blue-600"
           >
             Sign Up
           </button>
