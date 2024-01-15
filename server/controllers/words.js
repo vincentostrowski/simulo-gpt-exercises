@@ -1,29 +1,27 @@
 const Word = require("../models/word");
+const Definition = require("../models/definition");
 const QuestionSet = require("../models/questionSet");
-const axios = require("axios");
+const getDefinition = require("../utils/getDefinition");
 const createQuestions = require("../utils/createQuestions");
 
-/* const checkWordExists = async (word) => {
-  try {
-    const response = await axios.get(
-      //whatever dictionary api I use
-      `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=your-api-key`
-    );
-    return response.data.length > 0;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-}; */
-
 const createWord = async (req, res) => {
-  //checking if word exists in dictionary API
-  //done in the backend to prevent user from potentially adding non-words
-  /*  const wordExists = await checkWordExists(req.body.word);
-
-  if (!wordExists) {
-    return res.status(400).json({ message: "Word does not exist" });
-  } */
+  //Find definition for the word
+  //if not yet made, make one
+  let definitionDoc = await Definition.findOne({ word: req.body.word });
+  if (!definitionDoc) {
+    let definitions;
+    try {
+      definitions = await getDefinition(req.body.word);
+    } catch (error) {
+      res.status(500).send({ error: "Failed to get definition" });
+      return;
+    }
+    definitionDoc = new Definition({
+      word: req.body.word,
+      definitions,
+    });
+    await definitionDoc.save();
+  }
 
   //Find questionSet for the word
   //if not yet made, make one
@@ -56,6 +54,7 @@ const createWord = async (req, res) => {
     lastAttempt: null,
     dateAdded: date,
     questions: questionSet._id,
+    definitions: definitionDoc._id,
     questionIndex: 0,
     interval: 1,
   };
@@ -97,6 +96,8 @@ const getDueWord = async (req, res) => {
   const questions = [];
   const questionSet = await QuestionSet.findById(word.questions);
 
+  const definitions = await Definition.findById(word.definitions);
+
   //if GPT not needed
   for (let i = 0; i < 3; i++) {
     if (word.questionIndex + i < questionSet.questions.length) {
@@ -104,7 +105,7 @@ const getDueWord = async (req, res) => {
     }
   }
 
-  res.status(200).json({ word, questions });
+  res.status(200).json({ word, questions, definitions });
 };
 
 const getQueuedNewWords = async (req, res) => {

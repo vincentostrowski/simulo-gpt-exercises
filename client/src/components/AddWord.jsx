@@ -27,7 +27,14 @@ const AddWord = () => {
     try {
       await wordService.createWord({ word });
     } catch (error) {
-      alert(`Something went wrong while adding ${word}. Try again.`);
+      if (
+        error.response &&
+        error.response.data.error === "Failed to get definition"
+      ) {
+        alert(error.response.data.error);
+      } else {
+        alert(`Something went wrong while adding ${word}. Try again.`);
+      }
       setIsOpen(true);
       setWord(tempWord);
     }
@@ -45,7 +52,10 @@ const AddWord = () => {
         <input
           type="text"
           value={word}
-          onChange={(e) => setWord(e.target.value)}
+          onChange={(e) => {
+            setWord(e.target.value);
+            setIsOpen(true);
+          }}
           className="bg-color1 text-white px-4 py-2 rounded-full w-full border-none outline-none"
           placeholder="Add word"
         />

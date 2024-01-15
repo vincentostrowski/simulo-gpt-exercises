@@ -10,6 +10,7 @@ const wordSchema = mongoose.Schema({
   lastAttempt: Date,
   dateAdded: { type: Date, required: true },
   questions: { type: mongoose.Schema.ObjectId, ref: "QuestionSet" },
+  definitions: { type: mongoose.Schema.ObjectId, ref: "Definition" },
   questionIndex: { type: Number, required: true },
 });
 

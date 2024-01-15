@@ -10,19 +10,24 @@ import DefinitionDisplay from "./DefinitionDisplay";
 const Due = () => {
   const [word, setWord] = useState("");
   const [questions, setQuestions] = useState([]);
+  const [definitions, setDefinitions] = useState([]);
   const [revealLetter, setRevealLetter] = useState("");
   const [revealWord, setRevealWord] = useState(false);
   const [revealDefinition, setRevealDefinition] = useState(false);
   const [cardToggle, setCardToggle] = useState(false);
+  const [noDue, setNoDue] = useState(false);
 
   useEffect(() => {
     const getDue = async () => {
       const result = await wordService.getDue();
       if (!result.data) {
+        //add some logic so that 'no cards due' only renders after effect
+        setNoDue(true);
         return;
       }
       setWord(result.data.word);
       setQuestions(result.data.questions);
+      setDefinitions(result.data.definitions);
     };
 
     getDue();
@@ -38,12 +43,14 @@ const Due = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 pt-28">
-      {!(word && questions) ? (
+      {noDue && (
         <div className="m-6 flex flex-col items-center">
           <div>No cards due.</div>
           <div>Click 'Add' on the bottom right to add to your vocabulary.</div>
         </div>
-      ) : (
+      )}
+
+      {word && questions && (
         <>
           <WordDisplay
             revealWord={revealWord}
@@ -63,6 +70,7 @@ const Due = () => {
             <DefinitionDisplay
               setRevealDefinition={setRevealDefinition}
               revealDefinition={revealDefinition}
+              definitions={definitions}
             />
           )}
           {revealWord && word && revealDefinition && (
