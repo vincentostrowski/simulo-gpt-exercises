@@ -14,7 +14,7 @@ const getDefinition = async (word) => {
   };
 
   const response = await axios.request(options);
-  if (!response.data.defintions) {
+  if (!response.data.definitions) {
     throw new Error("No definition found");
   }
   return response.data.definitions;
