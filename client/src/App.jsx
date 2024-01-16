@@ -24,7 +24,11 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen w-screen">
+        Loading...
+      </div>
+    );
   }
 
   return (

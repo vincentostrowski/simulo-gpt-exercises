@@ -6,6 +6,7 @@ import QuestionList from "./QuestionList";
 import WordDisplay from "./WordDisplay";
 import WordDisplayController from "./WordDisplayController";
 import DefinitionDisplay from "./DefinitionDisplay";
+import NoWords from "./NoWords";
 
 const Due = () => {
   const [word, setWord] = useState("");
@@ -44,13 +45,7 @@ const Due = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 pt-28">
-      {noDue && (
-        <div className="m-6 flex flex-col items-center">
-          <div>No words due.</div>
-          <div>Click 'Add' on the bottom right to add to your vocabulary.</div>
-        </div>
-      )}
-
+      {noDue && <NoWords message="No words due." />}
       {word && questions && (
         <>
           <WordDisplay

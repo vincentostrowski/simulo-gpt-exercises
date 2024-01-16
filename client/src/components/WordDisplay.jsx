@@ -3,7 +3,6 @@ const WordDisplay = ({ revealWord, word, revealLetter, className }) => {
     red: "text-red-600",
     orange: "text-orange-600",
     yellow: "text-yellow-600",
-    green: "text-green-600",
     blue: "text-blue-600",
     indigo: "text-indigo-600",
     violet: "text-violet-600",

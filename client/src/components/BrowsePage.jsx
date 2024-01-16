@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import wordService from "../services/wordService";
 import WordBrowseView from "./WordBrowseView";
 import AddWord from "./AddWord";
+import NoWords from "./NoWords";
 
 const Browse = () => {
   const [words, setWords] = useState([]);
@@ -26,12 +27,7 @@ const Browse = () => {
 
   return (
     <div className="pt-28">
-      {noWords && (
-        <div className="m-6 flex flex-col items-center">
-          <div>No words.</div>
-          <div>Click 'Add' on the bottom right to add to your vocabulary.</div>
-        </div>
-      )}
+      {noWords && <NoWords message="No words added." />}
       <ul>
         {words &&
           words.map((word) => {
