@@ -45,7 +45,7 @@ const Due = () => {
     <div className="flex flex-col items-center justify-center gap-5 pt-28">
       {noDue && (
         <div className="m-6 flex flex-col items-center">
-          <div>No cards due.</div>
+          <div>No words due.</div>
           <div>Click 'Add' on the bottom right to add to your vocabulary.</div>
         </div>
       )}
