@@ -32,6 +32,11 @@ const AddWord = () => {
         error.response.data.error === "Failed to get definition"
       ) {
         alert(error.response.data.error);
+      } else if (
+        error.response &&
+        error.response.data.error === "You've already added this word"
+      ) {
+        alert(error.response.data.error);
       } else {
         alert(`Something went wrong while adding ${word}. Try again.`);
       }

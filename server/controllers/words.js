@@ -5,6 +5,21 @@ const getDefinition = require("../utils/getDefinition");
 const createQuestions = require("../utils/createQuestions");
 
 const createWord = async (req, res) => {
+  //First check if user already has this word
+  try {
+    const userWord = await Word.findOne({
+      user: req.user._id,
+      word: req.body.word,
+    });
+
+    if (userWord) {
+      throw new Error("You've already added this word");
+    }
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+    return;
+  }
+
   //Find definition for the word
   //if not yet made, make one
   let definitionDoc = await Definition.findOne({ word: req.body.word });
