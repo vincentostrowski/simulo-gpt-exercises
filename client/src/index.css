@@ -2,23 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+/* For Chrome, Safari, and Opera */
+::-webkit-scrollbar {
+  width: 8px; /* Reduced width */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(0, 32, 58);
+}
+
+/* For Internet Explorer and Edge */
+body {
+  scrollbar-width: auto; /* Changed to auto */
+  scrollbar-color: rgb(0, 32, 58) #f1f1f1;
   
-  /* Hide scrollbar for IE, Edge and Firefox */
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
 }
