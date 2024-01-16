@@ -30,8 +30,6 @@ const getNewQueued = async () => {
   });
 };
 
-//Body will contain just 'ease' field from card practice
-// should be   'easy'  or   'hard'
 const updateWord = async (id, ease, newPosition = null) => {
   const token = await auth.currentUser.getIdToken();
   return axios.put(
@@ -43,4 +41,18 @@ const updateWord = async (id, ease, newPosition = null) => {
   );
 };
 
-export default { getAll, getDue, getNewQueued, createWord, updateWord };
+const deleteWord = async (id) => {
+  const token = await auth.currentUser.getIdToken();
+  return axios.delete(`${baseUrl}/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export default {
+  getAll,
+  getDue,
+  getNewQueued,
+  createWord,
+  updateWord,
+  deleteWord,
+};

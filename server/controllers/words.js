@@ -203,10 +203,42 @@ const updateWord = async (req, res) => {
   res.status(200).json(word);
 };
 
+const deleteWord = async (req, res) => {
+  //it should be the case that if any parts of these mongo operations fail
+  //the other mongo operations are undone
+
+  try {
+    const word = await Word.findById(req.params.id);
+    const orderNumber = word.newOrder;
+    const result = await Word.deleteOne({ _id: word._id });
+
+    if (result.deletedCount === 1) {
+      res.status(200).json({ message: "Word deleted successfully" });
+
+      //if this word was new
+      //need to as well update newOrder of other words
+
+      await Word.updateMany(
+        {
+          user: req.user._id,
+          new: true,
+          newOrder: { $gt: orderNumber },
+        },
+        { $inc: { newOrder: -1 } }
+      );
+    } else {
+      res.status(404).json({ message: "Word not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting word" });
+  }
+};
+
 module.exports = {
   createWord,
   getWords,
   getDueWord,
   getQueuedNewWords,
   updateWord,
+  deleteWord,
 };
