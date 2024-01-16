@@ -36,6 +36,7 @@ const Due = () => {
   const onEaseSelection = () => {
     setRevealWord(false);
     setRevealLetter("");
+    setRevealDefinition(false);
     setWord(null);
     setQuestions(null);
     setCardToggle(!cardToggle);
