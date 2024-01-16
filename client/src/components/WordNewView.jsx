@@ -29,7 +29,7 @@ const WordNewView = ({ word }) => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-1/3 p-2 flex justify-between border-b border-gray-200">
+      <div className="w-1/3 p-2 flex justify-between border-b border-gray-400 text-shadow-md">
         <div>{word.word}</div>
         <div className>
           <form onSubmit={onSubmit}>

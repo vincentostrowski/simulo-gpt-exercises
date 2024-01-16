@@ -14,7 +14,7 @@ const WordBrowseView = ({ word }) => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-1/3 p-2 border-b border-gray-200 flex justify-between">
+      <div className="w-1/3 p-2 border-b border-gray-400 flex justify-between text-shadow-md">
         <div>{word.word}</div>
         <button
           onClick={onClick}

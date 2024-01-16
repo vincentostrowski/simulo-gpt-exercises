@@ -27,7 +27,7 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <form
-        className="bg-sky-950 p-9 rounded-full shadow-md p-20"
+        className="bg-sky-950 p-9 rounded-full shadow-md p-20 shadow-lg"
         onSubmit={(e) => {
           e.preventDefault();
           signInWithEmail(email, password);
@@ -58,7 +58,7 @@ const Login = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="w-1/2 p-2 text-white bg-color1 rounded-full hover:bg-blue-600"
+            className="w-1/2 p-2 text-white bg-color1 rounded-full hover:bg-blue-600 shadow-lg"
           >
             Login
           </button>

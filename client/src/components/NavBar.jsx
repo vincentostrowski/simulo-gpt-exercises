@@ -13,7 +13,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="flex bg-color1 p-4 fixed top-0 w-full h-28">
+    <nav className="flex bg-color1 p-4 fixed top-0 w-full h-28 shadow-lg">
       <img src={Logo} alt="logo" className="w-20" />
       <div className="flex justify-center w-full items-center gap-16 text-xl">
         <Link to="/due" className="text-color3 hover:text-gray-200">

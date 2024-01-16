@@ -1,7 +1,7 @@
 const QuestionList = ({ questions, className }) => {
   return (
     <div
-      className={`${className} w-full flex justify-center items-center w-2/3`}
+      className={`${className} w-2/3 flex justify-center items-center w-2/3 text-shadow`}
     >
       <ul>
         {questions &&
