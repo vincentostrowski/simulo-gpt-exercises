@@ -14,6 +14,10 @@ const wordSchema = mongoose.Schema({
   questionIndex: { type: Number, required: true },
 });
 
+// Create indexes as queries with these feilds are often made
+wordSchema.index({ user: 1 });
+wordSchema.index({ user: 1, new: 1 });
+
 wordSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
