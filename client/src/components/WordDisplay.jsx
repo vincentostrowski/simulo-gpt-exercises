@@ -12,7 +12,7 @@ const WordDisplay = ({ revealWord, word, revealLetter, className }) => {
 
   return (
     <div
-      className={`${className} w-full flex justify-center items-center h-16`}
+      className={`${className} w-full flex justify-center items-center h-16 text-shadow`}
     >
       {revealWord && word && (
         <h1>

@@ -29,7 +29,7 @@ const SignUp = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <form
-        className="bg-sky-950 p-6 rounded-full shadow-md p-20"
+        className="bg-sky-950 p-6 rounded-full shadow-md p-20 shadow-lg"
         onSubmit={handleSubmit}
       >
         <img src={Logo} alt="logo" className="w-32 h-32 mx-auto mb-4" />
@@ -69,7 +69,7 @@ const SignUp = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="w-1/3 p-2 text-white bg-color1 rounded-full hover:bg-blue-600"
+            className="w-1/3 p-2 text-white bg-color1 rounded-full hover:bg-blue-600 shadow-lg"
           >
             Sign Up
           </button>
