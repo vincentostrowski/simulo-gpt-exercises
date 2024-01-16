@@ -32,11 +32,11 @@ const getNewQueued = async () => {
 
 //Body will contain just 'ease' field from card practice
 // should be   'easy'  or   'hard'
-const updateWord = async (id, ease) => {
+const updateWord = async (id, ease, newPosition = null) => {
   const token = await auth.currentUser.getIdToken();
   return axios.put(
     `${baseUrl}/${id}`,
-    { ease },
+    { ease, newPosition },
     {
       headers: { Authorization: `Bearer ${token}` },
     }

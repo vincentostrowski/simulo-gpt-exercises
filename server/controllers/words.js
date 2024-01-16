@@ -13,6 +13,7 @@ const createWord = async (req, res) => {
     try {
       definitions = await getDefinition(req.body.word);
     } catch (error) {
+      console.log(error);
       res.status(500).send({ error: "Failed to get definition" });
       return;
     }
@@ -124,10 +125,7 @@ const updateWord = async (req, res) => {
   //if word is new and queue order is being updated
   if (req.body.ease === undefined) {
     const newPosition = req.body.newPosition;
-
-    const oldPosition = card.newOrder;
-    card.newOrder = newPosition;
-    await card.save();
+    const oldPosition = word.newOrder;
 
     if (oldPosition < newPosition) {
       await Word.updateMany(
@@ -149,7 +147,10 @@ const updateWord = async (req, res) => {
       );
     }
 
-    res.status(200).json(card);
+    word.newOrder = newPosition;
+    await word.save();
+
+    res.status(200).json(word);
     return;
   }
 
