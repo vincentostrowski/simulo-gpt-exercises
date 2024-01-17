@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 import WordBrowseView from "./WordBrowseView";
 import AddWord from "./AddWord";
 import NoWords from "./NoWords";
@@ -9,7 +9,10 @@ const Browse = () => {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { words, loading, hasMore, error } = useWordSearch(query, pageNumber);
+  const { words, loading, hasMore, error, noWords } = useWordSearch(
+    query,
+    pageNumber
+  );
 
   const observer = useRef();
   const lastWordElementRef = useCallback(
@@ -33,8 +36,10 @@ const Browse = () => {
 
   return (
     <div className="pt-28">
-      <SearchBox query={query} handleSearch={handleSearch} />
-      {/* {noWords && <NoWords message="No words added." />} */}
+      {noWords === false && (
+        <SearchBox query={query} handleSearch={handleSearch} />
+      )}
+      {noWords === true && <NoWords message="No words added." />}
       <ul className="pt-16">
         {words &&
           words.map((word, index) => {

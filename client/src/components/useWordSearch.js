@@ -8,6 +8,7 @@ const useWordSearch = (query, pageNumber) => {
   const [error, setError] = useState(false);
   const [words, setWords] = useState([]);
   const [hasMore, setHasMore] = useState(false);
+  const [noWords, setNoWords] = useState(null);
 
   useEffect(() => {
     setWords([]);
@@ -30,6 +31,10 @@ const useWordSearch = (query, pageNumber) => {
           });
           setHasMore(res.data.length > 0);
           setLoading(false);
+
+          setNoWords(
+            words.length === 0 && query === "" && res.data.length === 0
+          );
         })
         .catch((e) => {
           if (axios.isCancel(e)) return;
@@ -40,7 +45,7 @@ const useWordSearch = (query, pageNumber) => {
     return () => cancel && cancel();
   }, [query, pageNumber]);
 
-  return { loading, error, words, hasMore };
+  return { loading, error, words, hasMore, noWords };
 };
 
 export default useWordSearch;
