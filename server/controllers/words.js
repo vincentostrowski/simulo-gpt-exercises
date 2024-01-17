@@ -88,7 +88,16 @@ const createWord = async (req, res) => {
 };
 
 const getWords = async (req, res) => {
-  //implement some sort of pagination
+  const words = await Word.find({ user: req.user._id });
+  res.status(200).json(words);
+};
+
+const getWordsPaginated = async (req, res) => {
+  const page = parseInt(req.query.page);
+  const pageSize = parseInt(req.query.pageSize)
+    .skip((page - 1) * pageSize)
+    .limit(pageSize);
+
   const words = await Word.find({ user: req.user._id });
   res.status(200).json(words);
 };
@@ -125,11 +134,25 @@ const getDueWord = async (req, res) => {
 };
 
 const getQueuedNewWords = async (req, res) => {
-  //implement some sort of pagination
   const words = await Word.find({
     user: req.user._id,
     new: true,
   }).sort({ newOrder: 1 });
+
+  res.status(200).json(words);
+};
+
+const getQueuedNewWordsPaginated = async (req, res) => {
+  const page = parseInt(req.query.page);
+  const pageSize = parseInt(req.query.pageSize);
+
+  const words = await Word.find({
+    user: req.user._id,
+    new: true,
+  })
+    .sort({ newOrder: 1 })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize);
 
   res.status(200).json(words);
 };
@@ -249,6 +272,20 @@ const deleteWord = async (req, res) => {
   }
 };
 
+const getSearchResults = async (req, res) => {
+  const query = req.query.query;
+  const pageNumber = parseInt(req.query.pageNumber);
+
+  const words = await Word.find({
+    user: req.user._id,
+    word: { $regex: query, $options: "i" },
+  })
+    .skip((pageNumber - 1) * 10)
+    .limit(10);
+
+  res.status(200).json(words);
+};
+
 module.exports = {
   createWord,
   getWords,
@@ -256,4 +293,7 @@ module.exports = {
   getQueuedNewWords,
   updateWord,
   deleteWord,
+  getWordsPaginated,
+  getQueuedNewWordsPaginated,
+  getSearchResults,
 };

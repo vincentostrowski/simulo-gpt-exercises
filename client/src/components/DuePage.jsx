@@ -22,7 +22,6 @@ const Due = () => {
     const getDue = async () => {
       const result = await wordService.getDue();
       if (!result.data) {
-        //add some logic so that 'no cards due' only renders after effect
         setNoDue(true);
         return;
       }

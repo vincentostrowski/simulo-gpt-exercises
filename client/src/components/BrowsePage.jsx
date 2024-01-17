@@ -1,43 +1,62 @@
-import { useState, useEffect } from "react";
-import wordService from "../services/wordService";
+import { useEffect, useState, useRef, useCallback } from "react";
 import WordBrowseView from "./WordBrowseView";
 import AddWord from "./AddWord";
 import NoWords from "./NoWords";
+import useWordSearch from "./useWordSearch";
+import SearchBox from "./SearchBox";
 
 const Browse = () => {
-  const [words, setWords] = useState([]);
-  const [noWords, setNoWords] = useState(false);
+  const [query, setQuery] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
 
-  useEffect(() => {
-    const getAllWords = async () => {
-      try {
-        const res = await wordService.getAll();
-        if (res.data.length === 0) {
-          setNoWords(true);
-          return;
+  const { words, loading, hasMore, error } = useWordSearch(query, pageNumber);
+
+  const observer = useRef();
+  const lastWordElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
         }
-        setWords(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
 
-    getAllWords();
-  }, []);
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
+    setPageNumber(1);
+  };
 
   return (
     <div className="pt-28">
-      {noWords && <NoWords message="No words added." />}
-      <ul>
+      <SearchBox query={query} handleSearch={handleSearch} />
+      {/* {noWords && <NoWords message="No words added." />} */}
+      <ul className="pt-16">
         {words &&
-          words.map((word) => {
-            return (
-              <li key={word.id}>
-                <WordBrowseView word={word} />
-              </li>
-            );
+          words.map((word, index) => {
+            if (words.length === index + 1) {
+              return (
+                <li key={index} ref={lastWordElementRef}>
+                  <WordBrowseView word={word} />
+                </li>
+              );
+            } else {
+              return (
+                <li key={index}>
+                  <WordBrowseView word={word} />
+                </li>
+              );
+            }
           })}
       </ul>
+      <div className="flex justify-center">
+        <div>{loading && "Loading..."}</div>
+        <div>{error && "Error..."}</div>
+      </div>
       <AddWord />
     </div>
   );

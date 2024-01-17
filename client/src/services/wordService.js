@@ -23,10 +23,11 @@ const getDue = async () => {
   });
 };
 
-const getNewQueued = async () => {
+const getNewQueued = async (page, pageSize) => {
   const token = await auth.currentUser.getIdToken();
-  return axios.get(`${baseUrl}/queued-new`, {
+  return axios.get(`${baseUrl}/queued-new/paginated`, {
     headers: { Authorization: `Bearer ${token}` },
+    params: { page, pageSize },
   });
 };
 
