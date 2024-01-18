@@ -1,17 +1,37 @@
-import { useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import WordBrowseView from "./WordBrowseView";
 import AddWord from "./AddWord";
 import NoWords from "./NoWords";
 import useWordSearch from "./useWordSearch";
 import SearchBox from "./SearchBox";
 
+//using ContextAPI to have available the socket connection from any component
+import { useContext } from "react";
+import { SocketContext } from "../SocketProvider";
+
 const Browse = () => {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
+  const [wordsUpdated, setWordsUpdated] = useState(false);
+  //getting the socket connection
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    const handleWordsUpdated = () => {
+      setWordsUpdated((prevWordsUpdated) => !prevWordsUpdated);
+      setPageNumber(1);
+    };
+    socket.on("wordsUpdated", handleWordsUpdated);
+
+    return () => {
+      socket.off("wordsUpdated", handleWordsUpdated);
+    };
+  }, []);
 
   const { words, loading, hasMore, error, noWords } = useWordSearch(
     query,
-    pageNumber
+    pageNumber,
+    wordsUpdated
   );
 
   const observer = useRef();

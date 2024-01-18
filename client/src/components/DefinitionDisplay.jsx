@@ -23,9 +23,10 @@ const DefinitionDisplay = ({
             <ul>
               {definitions.definitions.map((def, index) => {
                 return (
-                  <li
-                    key={index}
-                  >{`${def.partOfSpeech}: ${def.definition}`}</li>
+                  <li key={index} className="flex mb-4 gap-4">
+                    <div>{`${def.partOfSpeech}:`}</div>
+                    <div>{def.definition}</div>
+                  </li>
                 );
               })}
             </ul>

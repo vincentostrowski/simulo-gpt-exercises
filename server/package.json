@@ -18,8 +18,10 @@
     "express-async-errors": "^3.1.1",
     "firebase": "^10.7.1",
     "firebase-admin": "^12.0.0",
+    "http": "^0.0.1-security",
     "mongoose": "^7.6.5",
     "mongoose-unique-validator": "^4.0.0",
-    "openai": "^4.24.7"
+    "openai": "^4.24.7",
+    "socket.io": "^4.7.4"
   }
 }

@@ -3,7 +3,7 @@ import axios from "axios";
 import { auth } from "../config/firebase-config";
 const baseUrl = `${import.meta.env.VITE_BASEURL}/api/words`;
 
-const useWordSearch = (query, pageNumber) => {
+const useWordSearch = (query, pageNumber, wordsUpdated) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [words, setWords] = useState([]);
@@ -12,7 +12,7 @@ const useWordSearch = (query, pageNumber) => {
 
   useEffect(() => {
     setWords([]);
-  }, [query]);
+  }, [query, wordsUpdated]);
 
   useEffect(() => {
     let cancel;
@@ -31,7 +31,6 @@ const useWordSearch = (query, pageNumber) => {
           });
           setHasMore(res.data.length > 0);
           setLoading(false);
-
           setNoWords(
             words.length === 0 && query === "" && res.data.length === 0
           );
@@ -43,7 +42,7 @@ const useWordSearch = (query, pageNumber) => {
     });
 
     return () => cancel && cancel();
-  }, [query, pageNumber]);
+  }, [query, pageNumber, wordsUpdated]);
 
   return { loading, error, words, hasMore, noWords };
 };

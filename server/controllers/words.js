@@ -3,6 +3,7 @@ const Definition = require("../models/definition");
 const QuestionSet = require("../models/questionSet");
 const getDefinition = require("../utils/getDefinition");
 const createQuestions = require("../utils/createQuestions");
+const io = require("../socket.js").getIO();
 
 const createWord = async (req, res) => {
   //First check if user already has this word
@@ -78,6 +79,9 @@ const createWord = async (req, res) => {
   const wordDocument = new Word(word);
   const wordSaved = await wordDocument.save();
   res.status(201).json(wordSaved);
+
+  //after successful saving in DB, send message to client to refresh/rerender
+  io.emit("wordsUpdated");
 
   //after making word document available for user to use
   //make more questions for the questionSet on server
@@ -187,6 +191,8 @@ const updateWord = async (req, res) => {
 
     word.newOrder = newPosition;
     await word.save();
+    //after successful saving in DB, send message to client to refresh/rerender
+    io.emit("wordsUpdated");
 
     res.status(200).json(word);
     return;
@@ -249,6 +255,8 @@ const deleteWord = async (req, res) => {
     const word = await Word.findById(req.params.id);
     const orderNumber = word.newOrder;
     const result = await Word.deleteOne({ _id: word._id });
+    //after successful DB operation, send message to client to refresh/rerender
+    io.emit("wordsUpdated");
 
     if (result.deletedCount === 1) {
       res.status(200).json({ message: "Word deleted successfully" });
