@@ -1,5 +1,5 @@
 import wordService from "../services/wordService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import AddWord from "./AddWord";
 import Ease from "./Ease";
 import QuestionList from "./QuestionList";
@@ -7,6 +7,7 @@ import WordDisplay from "./WordDisplay";
 import WordDisplayController from "./WordDisplayController";
 import DefinitionDisplay from "./DefinitionDisplay";
 import NoWords from "./NoWords";
+import { SocketContext } from "../SocketProvider";
 
 const Due = () => {
   const [word, setWord] = useState("");
@@ -17,6 +18,20 @@ const Due = () => {
   const [revealDefinition, setRevealDefinition] = useState(false);
   const [cardToggle, setCardToggle] = useState(false);
   const [noDue, setNoDue] = useState(false);
+  const [cardCreated, setCardCreated] = useState(false);
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    const handleCardCreated = () => {
+      setCardCreated((prevWordsUpdated) => !prevWordsUpdated);
+      setNoDue(false);
+    };
+    socket.on("wordsUpdated", handleCardCreated);
+
+    return () => {
+      socket.off("wordsUpdated", handleCardCreated);
+    };
+  }, []);
 
   useEffect(() => {
     const getDue = async () => {
@@ -31,7 +46,7 @@ const Due = () => {
     };
 
     getDue();
-  }, [cardToggle]);
+  }, [cardToggle, cardCreated]);
 
   const onEaseSelection = () => {
     setRevealWord(false);
