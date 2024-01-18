@@ -1,12 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import wordService from "../services/wordService";
 import WordNewView from "./WordNewView";
 import AddWord from "./AddWord";
 import NoWords from "./NoWords";
+import { SocketContext } from "../SocketProvider";
 
 const New = () => {
   const [words, setWords] = useState([]);
   const [noWords, setNoWords] = useState(false);
+  const [wordsUpdated, setWordsUpdated] = useState(false);
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    const handleWordsUpdated = () => {
+      setWordsUpdated((prevWordsUpdated) => !prevWordsUpdated);
+    };
+    socket.on("wordsUpdated", handleWordsUpdated);
+
+    return () => {
+      socket.off("wordsUpdated", handleWordsUpdated);
+    };
+  }, []);
 
   useEffect(() => {
     const getNewWords = async () => {
@@ -23,7 +37,7 @@ const New = () => {
     };
 
     getNewWords();
-  }, []);
+  }, [wordsUpdated]);
 
   return (
     <div className="pt-28">
@@ -32,7 +46,7 @@ const New = () => {
         {words &&
           words.map((word) => {
             return (
-              <li key={word.id}>
+              <li key={word.id + word.newOrder}>
                 <WordNewView word={word} />
               </li>
             );
