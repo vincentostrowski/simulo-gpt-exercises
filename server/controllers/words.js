@@ -81,7 +81,7 @@ const createWord = async (req, res) => {
   res.status(201).json(wordSaved);
 
   //after successful saving in DB, send message to client to refresh/rerender
-  io.emit("wordsUpdated");
+  io.emit("wordCreated");
 
   //after making word document available for user to use
   //make more questions for the questionSet on server
@@ -192,7 +192,7 @@ const updateWord = async (req, res) => {
     word.newOrder = newPosition;
     await word.save();
     //after successful saving in DB, send message to client to refresh/rerender
-    io.emit("wordsUpdated");
+    io.emit("wordUpdated");
 
     res.status(200).json(word);
     return;
@@ -256,7 +256,7 @@ const deleteWord = async (req, res) => {
     const orderNumber = word.newOrder;
     const result = await Word.deleteOne({ _id: word._id });
     //after successful DB operation, send message to client to refresh/rerender
-    io.emit("wordsUpdated");
+    io.emit("wordDeleted");
 
     if (result.deletedCount === 1) {
       res.status(200).json({ message: "Word deleted successfully" });

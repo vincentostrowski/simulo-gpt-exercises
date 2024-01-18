@@ -23,13 +23,13 @@ const Due = () => {
 
   useEffect(() => {
     const handleCardCreated = () => {
-      setCardCreated((prevWordsUpdated) => !prevWordsUpdated);
+      setCardCreated((prevWordCreated) => !prevWordCreated);
       setNoDue(false);
     };
-    socket.on("wordsUpdated", handleCardCreated);
+    socket.on("wordCreated", handleCardCreated);
 
     return () => {
-      socket.off("wordsUpdated", handleCardCreated);
+      socket.off("wordCreated", handleCardCreated);
     };
   }, []);
 

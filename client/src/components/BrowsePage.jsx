@@ -21,10 +21,11 @@ const Browse = () => {
       setWordsUpdated((prevWordsUpdated) => !prevWordsUpdated);
       setPageNumber(1);
     };
-    socket.on("wordsUpdated", handleWordsUpdated);
-
+    socket.on("wordDeleted", handleWordsUpdated);
+    socket.on("wordCreated", handleWordsUpdated);
     return () => {
-      socket.off("wordsUpdated", handleWordsUpdated);
+      socket.off("wordDeleted", handleWordsUpdated);
+      socket.off("wordCreated", handleWordsUpdated);
     };
   }, []);
 

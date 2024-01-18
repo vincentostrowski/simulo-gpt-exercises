@@ -15,10 +15,12 @@ const New = () => {
     const handleWordsUpdated = () => {
       setWordsUpdated((prevWordsUpdated) => !prevWordsUpdated);
     };
-    socket.on("wordsUpdated", handleWordsUpdated);
+    socket.on("wordUpdated", handleWordsUpdated);
+    socket.on("wordCreated", handleWordsUpdated);
 
     return () => {
-      socket.off("wordsUpdated", handleWordsUpdated);
+      socket.off("wordUpdated", handleWordsUpdated);
+      socket.off("wordCreated", handleWordsUpdated);
     };
   }, []);
 
