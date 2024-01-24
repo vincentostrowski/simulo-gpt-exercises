@@ -6,7 +6,7 @@ import { auth } from "./config/firebase-config";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import DuePage from "./components/DuePage";
-import NewQueuePage from "./components/NewQueuePage";
+import AddedPage from "./components/AddedPage";
 import BrowsePage from "./components/BrowsePage";
 import NavBar from "./components/NavBar";
 
@@ -48,8 +48,8 @@ const App = () => {
           element={user ? <DuePage /> : <Navigate to="/login" replace />}
         />
         <Route
-          path="/new"
-          element={user ? <NewQueuePage /> : <Navigate to="/login" replace />}
+          path="/added"
+          element={user ? <AddedPage /> : <Navigate to="/login" replace />}
         />
         <Route
           path="/browse"

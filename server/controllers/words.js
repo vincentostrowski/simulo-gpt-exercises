@@ -284,12 +284,24 @@ const getSearchResults = async (req, res) => {
   const query = req.query.query;
   const pageNumber = parseInt(req.query.pageNumber);
 
-  const words = await Word.find({
-    user: req.user._id,
-    word: { $regex: query, $options: "i" },
-  })
-    .skip((pageNumber - 1) * 10)
-    .limit(10);
+  let words;
+  console.log(req.query.newFilter);
+  if (req.query.newFilter === "true") {
+    words = await Word.find({
+      user: req.user._id,
+      word: { $regex: query, $options: "i" },
+      new: true,
+    })
+      .skip((pageNumber - 1) * 10)
+      .limit(10);
+  } else {
+    words = await Word.find({
+      user: req.user._id,
+      word: { $regex: query, $options: "i" },
+    })
+      .skip((pageNumber - 1) * 10)
+      .limit(10);
+  }
 
   res.status(200).json(words);
 };

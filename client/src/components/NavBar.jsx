@@ -19,8 +19,8 @@ const NavBar = () => {
         <Link to="/due" className="text-color3 hover:text-gray-200">
           Due
         </Link>
-        <Link to="/new" className="text-color3 hover:text-gray-200">
-          New
+        <Link to="/added" className="text-color3 hover:text-gray-200">
+          Added
         </Link>
         <Link to="/browse" className="text-color3 hover:text-gray-200">
           Browse

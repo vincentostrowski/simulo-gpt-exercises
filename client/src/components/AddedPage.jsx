@@ -9,7 +9,7 @@ import SearchBox from "./SearchBox";
 import { useContext } from "react";
 import { SocketContext } from "../SocketProvider";
 
-const Browse = () => {
+const Added = () => {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
   const [wordsUpdated, setWordsUpdated] = useState(false);
@@ -64,8 +64,6 @@ const Browse = () => {
     setPageNumber(1);
   };
 
-  console.log(newFilter);
-
   return (
     <div className="pt-28">
       {noWords === false && (
@@ -103,4 +101,4 @@ const Browse = () => {
   );
 };
 
-export default Browse;
+export default Added;

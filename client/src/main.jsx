@@ -5,11 +5,9 @@ import "./index.css";
 import { SocketProvider } from "./SocketProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  /* <React.StrictMode> */
   <SocketProvider>
     <div className="font-mono">
       <App />
     </div>
   </SocketProvider>
-  /* </React.StrictMode> */
 );
