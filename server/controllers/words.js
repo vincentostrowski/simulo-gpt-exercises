@@ -292,6 +292,7 @@ const getSearchResults = async (req, res) => {
       word: { $regex: query, $options: "i" },
       new: true,
     })
+      .sort({ newOrder: 1 })
       .skip((pageNumber - 1) * 10)
       .limit(10);
   } else {
