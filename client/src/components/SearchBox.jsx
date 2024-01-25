@@ -1,4 +1,4 @@
-const SearchBox = ({ query, handleSearch, handleNewToggle }) => {
+const SearchBox = ({ query, handleSearch, handleNewToggle, newFilter }) => {
   return (
     <div className="flex flex-col gap-2 justify-center items-center p-3 w-full fixed bg-opacity-100">
       <input
@@ -13,7 +13,7 @@ const SearchBox = ({ query, handleSearch, handleNewToggle }) => {
           className="bg-gray-300 text-xs text-color3 hover:text-gray-200 rounded-lg px-1"
           onClick={handleNewToggle}
         >
-          New Queue
+          {newFilter ? "All Words" : "New Queue"}
         </button>
       </div>
     </div>

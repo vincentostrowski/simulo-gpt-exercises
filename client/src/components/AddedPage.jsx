@@ -71,6 +71,7 @@ const Added = () => {
           query={query}
           handleSearch={handleSearch}
           handleNewToggle={handleNewToggle}
+          newFilter={newFilter}
         />
       )}
       {noWords === true && <NoWords message="No words added." />}
