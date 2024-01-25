@@ -44,6 +44,7 @@ const createWord = async (req, res) => {
   //if not yet made, make one
   let questionSet = await QuestionSet.findOne({ word: req.body.word });
   let questions;
+  let newQuestionSet = false;
   if (!questionSet) {
     //generate 5 questions to immediately place within document
     questions = await createQuestions(req.body.word, 5);
@@ -52,6 +53,7 @@ const createWord = async (req, res) => {
       questions,
     });
     await questionSet.save();
+    newQuestionSet = true;
   }
 
   //Cards newOrder will be the amount of new cards that exist
@@ -86,9 +88,11 @@ const createWord = async (req, res) => {
   //after making word document available for user to use
   //make more questions for the questionSet on server
   //make subsequent generate 35, using first response
-  const moreQuestions = await createQuestions(req.body.word, 35, questions);
-  questionSet.questions.push(...moreQuestions);
-  await questionSet.save();
+  if (newQuestionSet) {
+    const moreQuestions = await createQuestions(req.body.word, 35, questions);
+    questionSet.questions.push(...moreQuestions);
+    await questionSet.save();
+  }
 };
 
 const getWords = async (req, res) => {
@@ -166,31 +170,27 @@ const updateWord = async (req, res) => {
 
   //if word is new and queue order is being updated
   if (req.body.ease === undefined) {
-    const newPosition = req.body.newPosition;
-    const oldPosition = word.newOrder;
-
-    if (oldPosition < newPosition) {
-      await Word.updateMany(
-        {
-          user: req.user._id,
-          new: true,
-          newOrder: { $gt: oldPosition, $lte: newPosition },
-        },
-        { $inc: { newOrder: -1 } }
-      );
-    } else if (oldPosition > newPosition) {
-      await Word.updateMany(
-        {
-          user: req.user._id,
-          new: true,
-          newOrder: { $gte: newPosition, $lt: oldPosition },
-        },
-        { $inc: { newOrder: 1 } }
-      );
-    }
-
+    const newPosition = Number(req.body.newPosition);
     word.newOrder = newPosition;
     await word.save();
+
+    const words = await Word.find({ user: req.user._id, new: true }).sort({
+      newOrder: 1,
+    });
+
+    let inc = 0;
+    for (let i = 0; i < words.length; i++) {
+      if (words[i].word === word.word) {
+        console.log(words[i].word, word.word);
+        continue;
+      }
+      if (i === newPosition) {
+        inc = 1;
+      }
+      words[i].newOrder = i + inc;
+      await words[i].save();
+    }
+
     //after successful saving in DB, send message to client to refresh/rerender
     io.emit("wordUpdated");
 
@@ -285,7 +285,6 @@ const getSearchResults = async (req, res) => {
   const pageNumber = parseInt(req.query.pageNumber);
 
   let words;
-  console.log(req.query.newFilter);
   if (req.query.newFilter === "true") {
     words = await Word.find({
       user: req.user._id,
