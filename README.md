@@ -5,7 +5,17 @@ Simulo is a full-stack web application for vocabulary learning through exercises
 ![image](https://github.com/vincentostrowski/simulo-gpt-exercises/assets/92182422/e82801d5-9647-4c02-856b-cda52a76b539)
 ![image](https://github.com/vincentostrowski/simulo-gpt-exercises/assets/92182422/c63ca394-21fb-4547-a67d-0eb35286e483)
 
+## Technologies Used
 
+- React
+- Express
+- Node.js
+- MongoDB
+- ChatGPT API
+- WordsAPI
+- Tailwind
+- Socket.io
+- Firebase Auth
 
 ## Features
 
