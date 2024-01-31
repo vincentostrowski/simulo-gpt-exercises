@@ -1,3 +1,4 @@
+// Component that displays the definitions of a word when Reveal button clicked
 const DefinitionDisplay = ({
   setRevealDefinition,
   revealDefinition,

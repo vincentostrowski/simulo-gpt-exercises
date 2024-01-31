@@ -1,3 +1,4 @@
+// Component to display when no words returned on a view
 const NoWordsMessage = ({ message }) => {
   return (
     <div className="m-6 flex flex-col items-center">

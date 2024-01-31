@@ -3,6 +3,7 @@ import AddWordButton from "../components/AddWordButton";
 import PackListItem from "../components/PackListItem";
 import packService from "../services/packService";
 
+// View component for sets of words a user can download to their account
 const BrowsePage = () => {
   const [packs, setPacks] = useState([]);
 

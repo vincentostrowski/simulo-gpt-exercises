@@ -9,6 +9,7 @@ import DefinitionDisplay from "../components/DefinitionDisplay";
 import NoWordsMessage from "../components/NoWordsMessage";
 import { SocketContext } from "../contexts/SocketProvider";
 
+// View component for word exercises that are due
 const DuePage = () => {
   const [word, setWord] = useState("");
   const [questions, setQuestions] = useState([]);
@@ -21,6 +22,8 @@ const DuePage = () => {
   const [cardCreated, setCardCreated] = useState(false);
   const socket = useContext(SocketContext);
 
+  // Rerendering from 'noDue' state if user adds a new word
+  // This new word will now be due
   useEffect(() => {
     const handleCardCreated = () => {
       setCardCreated((prevWordCreated) => !prevWordCreated);
@@ -33,6 +36,7 @@ const DuePage = () => {
     };
   }, []);
 
+  // Fetching of due card
   useEffect(() => {
     const getDue = async () => {
       const result = await wordService.getDue();

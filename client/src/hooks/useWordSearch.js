@@ -3,6 +3,7 @@ import axios from "axios";
 import { auth } from "../config/firebase-config";
 const baseUrl = `${import.meta.env.VITE_BASEURL}/api/words`;
 
+// Custom Hook used to search for words
 const useWordSearch = (query, pageNumber, wordsUpdated, newFilter) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -10,10 +11,13 @@ const useWordSearch = (query, pageNumber, wordsUpdated, newFilter) => {
   const [hasMore, setHasMore] = useState(false);
   const [noWords, setNoWords] = useState(null);
 
+  // Reset the search results when the query, wordsUpdated flag, or newFilter changes.
   useEffect(() => {
     setWords([]);
   }, [query, wordsUpdated, newFilter]);
 
+  // Perform the search when the component mounts
+  // or when the query, page number, or newFilter changes.
   useEffect(() => {
     let cancel;
     setError(false);

@@ -1,8 +1,14 @@
 import { useState } from "react";
 import packService from "../services/packService";
 
+// Component to display a single wordPack on the browse view
+// Provides preview of containing words and download button
 const PackListItem = ({ pack }) => {
   const [openPreview, setOpenPreview] = useState(true);
+
+  const handleTogglePreview = () => {
+    setOpenPreview((prev) => !prev);
+  };
 
   const handleDownload = () => {
     packService.downloadPack(pack._id);
@@ -35,12 +41,7 @@ const PackListItem = ({ pack }) => {
               <button className="text-xs" onClick={handleDownload}>
                 Download
               </button>
-              <button
-                className="text-xs"
-                onClick={() => {
-                  setOpenPreview((prev) => !prev);
-                }}
-              >
+              <button className="text-xs" onClick={handleTogglePreview}>
                 Words
               </button>
             </div>

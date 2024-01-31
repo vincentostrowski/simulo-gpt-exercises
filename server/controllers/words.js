@@ -181,7 +181,6 @@ const updateWord = async (req, res) => {
     let inc = 0;
     for (let i = 0; i < words.length; i++) {
       if (words[i].word === word.word) {
-        console.log(words[i].word, word.word);
         continue;
       }
       if (i === newPosition) {

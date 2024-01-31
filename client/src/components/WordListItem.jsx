@@ -1,3 +1,5 @@
+// Component to display a word in the words list on added page
+// Allows the user to update the order of the word or delete the word
 import wordService from "../services/wordService";
 import { useState } from "react";
 
@@ -5,7 +7,16 @@ const WordListItem = ({ word, newFilter }) => {
   const [order, setOrder] = useState(
     word.newOrder === null ? "" : word.newOrder
   );
+
+  // Submitted state used in conjunction with onBlur
+  // to rest input fields to original value when focus lost and no submission
   const [submitted, setSubmitted] = useState(false);
+
+  const onBlur = () => {
+    if (!submitted) {
+      setOrder(word.newOrder);
+    }
+  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -32,12 +43,6 @@ const WordListItem = ({ word, newFilter }) => {
   const onChange = (event) => {
     setOrder(event.target.value);
     setSubmitted(true);
-  };
-
-  const onBlur = () => {
-    if (!submitted) {
-      setOrder(word.newOrder);
-    }
   };
 
   return (

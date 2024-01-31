@@ -1,12 +1,12 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, useContext } from "react";
 import WordListItem from "../components/WordListItem";
 import AddWordButton from "../components/AddWordButton";
 import NoWordsMessage from "../components/NoWordsMessage";
 import useWordSearch from "../hooks/useWordSearch";
 import SearchBox from "../components/SearchBox";
-import { useContext } from "react";
 import { SocketContext } from "../contexts/SocketProvider";
 
+// View component for the words that a user has added to their account
 const AddedPage = () => {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
@@ -29,6 +29,7 @@ const AddedPage = () => {
     };
   }, []);
 
+  // Custom hook used for search functionality
   const { words, loading, hasMore, error, noWords } = useWordSearch(
     query,
     pageNumber,
@@ -36,6 +37,7 @@ const AddedPage = () => {
     newFilter
   );
 
+  // Infinite Scroll implementation
   const observer = useRef();
   const lastWordElementRef = useCallback(
     (node) => {

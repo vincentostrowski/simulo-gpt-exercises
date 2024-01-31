@@ -9,25 +9,10 @@ const createWord = async (body) => {
   });
 };
 
-const getAll = async () => {
-  const token = await auth.currentUser.getIdToken();
-  return axios.get(baseUrl, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-};
-
 const getDue = async () => {
   const token = await auth.currentUser.getIdToken();
   return axios.get(`${baseUrl}/due`, {
     headers: { Authorization: `Bearer ${token}` },
-  });
-};
-
-const getNewQueued = async (page, pageSize) => {
-  const token = await auth.currentUser.getIdToken();
-  return axios.get(`${baseUrl}/queued-new/paginated`, {
-    headers: { Authorization: `Bearer ${token}` },
-    params: { page, pageSize },
   });
 };
 
@@ -50,9 +35,7 @@ const deleteWord = async (id) => {
 };
 
 export default {
-  getAll,
   getDue,
-  getNewQueued,
   createWord,
   updateWord,
   deleteWord,
