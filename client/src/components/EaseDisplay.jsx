@@ -1,6 +1,6 @@
 import wordService from "../services/wordService";
 
-const Ease = ({ word, onEaseSelection }) => {
+const EaseDisplay = ({ word, onEaseSelection }) => {
   const easeSelect = async (ease) => {
     try {
       await wordService.updateWord(word.id, ease);
@@ -39,4 +39,4 @@ const Ease = ({ word, onEaseSelection }) => {
   );
 };
 
-export default Ease;
+export default EaseDisplay;

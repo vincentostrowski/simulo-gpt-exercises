@@ -1,4 +1,4 @@
-const WordDisplay = ({ revealWord, word, revealLetter, className }) => {
+const DueWordDisplay = ({ revealWord, word, revealLetter, className }) => {
   const colorClasses = {
     red: "text-red-600",
     orange: "text-orange-600",
@@ -34,4 +34,4 @@ const WordDisplay = ({ revealWord, word, revealLetter, className }) => {
   );
 };
 
-export default WordDisplay;
+export default DueWordDisplay;

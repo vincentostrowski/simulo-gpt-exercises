@@ -21,6 +21,7 @@
     "http": "^0.0.1-security",
     "mongoose": "^7.6.5",
     "mongoose-unique-validator": "^4.0.0",
+    "nodemon": "^3.0.3",
     "openai": "^4.24.7",
     "socket.io": "^4.7.4"
   }

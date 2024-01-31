@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const WordDisplayController = ({
+const DueWordDisplayController = ({
   setRevealWord,
   setRevealLetter,
   word,
@@ -43,4 +43,4 @@ const WordDisplayController = ({
   );
 };
 
-export default WordDisplayController;
+export default DueWordDisplayController;

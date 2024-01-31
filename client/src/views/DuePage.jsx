@@ -1,15 +1,15 @@
 import wordService from "../services/wordService";
 import { useState, useEffect, useContext } from "react";
-import AddWord from "./AddWord";
-import Ease from "./Ease";
-import QuestionList from "./QuestionList";
-import WordDisplay from "./WordDisplay";
-import WordDisplayController from "./WordDisplayController";
-import DefinitionDisplay from "./DefinitionDisplay";
-import NoWords from "./NoWords";
-import { SocketContext } from "../SocketProvider";
+import AddWordButton from "../components/AddWordButton";
+import EaseDisplay from "../components/EaseDisplay";
+import QuestionList from "../components/QuestionList";
+import DueWordDisplay from "../components/DueWordDisplay";
+import DueWordDisplayController from "../components/DueWordDisplayController";
+import DefinitionDisplay from "../components/DefinitionDisplay";
+import NoWordsMessage from "../components/NoWordsMessage";
+import { SocketContext } from "../contexts/SocketProvider";
 
-const Due = () => {
+const DuePage = () => {
   const [word, setWord] = useState("");
   const [questions, setQuestions] = useState([]);
   const [definitions, setDefinitions] = useState([]);
@@ -59,17 +59,17 @@ const Due = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 pt-28">
-      {noDue && <NoWords message="No words due." />}
+      {noDue && <NoWordsMessage message="No words due." />}
       {word && questions && (
         <>
-          <WordDisplay
+          <DueWordDisplay
             revealWord={revealWord}
             word={word}
             revealLetter={revealLetter}
             className=""
           />
           <QuestionList questions={questions} className="" />
-          <WordDisplayController
+          <DueWordDisplayController
             setRevealWord={setRevealWord}
             setRevealLetter={setRevealLetter}
             word={word}
@@ -84,13 +84,13 @@ const Due = () => {
             />
           )}
           {revealWord && word && revealDefinition && (
-            <Ease word={word} onEaseSelection={onEaseSelection} />
+            <EaseDisplay word={word} onEaseSelection={onEaseSelection} />
           )}
         </>
       )}
-      <AddWord />
+      <AddWordButton />
     </div>
   );
 };
 
-export default Due;
+export default DuePage;

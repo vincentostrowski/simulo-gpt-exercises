@@ -3,11 +3,11 @@ import { Navigate } from "react-router";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase-config";
-import LoginPage from "./components/LoginPage";
-import SignupPage from "./components/SignupPage";
-import DuePage from "./components/DuePage";
-import AddedPage from "./components/AddedPage";
-import BrowsePage from "./components/BrowsePage";
+import LoginPage from "./views/LoginPage";
+import SignupPage from "./views/SignupPage";
+import DuePage from "./views/DuePage";
+import AddedPage from "./views/AddedPage";
+import BrowsePage from "./views/BrowsePage";
 import NavBar from "./components/NavBar";
 
 const App = () => {

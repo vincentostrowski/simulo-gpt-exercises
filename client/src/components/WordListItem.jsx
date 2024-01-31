@@ -1,7 +1,7 @@
 import wordService from "../services/wordService";
 import { useState } from "react";
 
-const WordView = ({ word, newFilter }) => {
+const WordListItem = ({ word, newFilter }) => {
   const [order, setOrder] = useState(
     word.newOrder === null ? "" : word.newOrder
   );
@@ -69,4 +69,4 @@ const WordView = ({ word, newFilter }) => {
   );
 };
 
-export default WordView;
+export default WordListItem;

@@ -1,4 +1,4 @@
-const Loading = ({ message }) => {
+const NoWordsMessage = ({ message }) => {
   return (
     <div className="m-6 flex flex-col items-center">
       <div>{message}</div>
@@ -7,4 +7,4 @@ const Loading = ({ message }) => {
   );
 };
 
-export default Loading;
+export default NoWordsMessage;

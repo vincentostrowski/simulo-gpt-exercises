@@ -1,20 +1,17 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import WordView from "./WordView";
-import AddWord from "./AddWord";
-import NoWords from "./NoWords";
-import useWordSearch from "./useWordSearch";
-import SearchBox from "./SearchBox";
-
-//using ContextAPI to have available the socket connection from any component
+import WordListItem from "../components/WordListItem";
+import AddWordButton from "../components/AddWordButton";
+import NoWordsMessage from "../components/NoWordsMessage";
+import useWordSearch from "../hooks/useWordSearch";
+import SearchBox from "../components/SearchBox";
 import { useContext } from "react";
-import { SocketContext } from "../SocketProvider";
+import { SocketContext } from "../contexts/SocketProvider";
 
-const Added = () => {
+const AddedPage = () => {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
   const [wordsUpdated, setWordsUpdated] = useState(false);
   const [newFilter, setNewFilter] = useState(false);
-  //getting the socket connection
   const socket = useContext(SocketContext);
 
   useEffect(() => {
@@ -74,20 +71,20 @@ const Added = () => {
           newFilter={newFilter}
         />
       )}
-      {noWords === true && <NoWords message="No words added." />}
+      {noWords === true && <NoWordsMessage message="No words added." />}
       <ul className="pt-16">
         {words &&
           words.map((word, index) => {
             if (words.length === index + 1) {
               return (
                 <li key={index} ref={lastWordElementRef}>
-                  <WordView word={word} newFilter={newFilter} />
+                  <WordListItem word={word} newFilter={newFilter} />
                 </li>
               );
             } else {
               return (
                 <li key={index}>
-                  <WordView word={word} newFilter={newFilter} />
+                  <WordListItem word={word} newFilter={newFilter} />
                 </li>
               );
             }
@@ -97,9 +94,9 @@ const Added = () => {
         <div>{loading && "Loading..."}</div>
         <div>{error && "Error..."}</div>
       </div>
-      <AddWord />
+      <AddWordButton />
     </div>
   );
 };
 
-export default Added;
+export default AddedPage;

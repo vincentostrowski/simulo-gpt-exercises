@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import wordService from "../services/wordService";
 
-const AddWord = () => {
+const AddWordButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [word, setWord] = useState("");
   const ref = useRef(null);
@@ -69,4 +69,4 @@ const AddWord = () => {
   );
 };
 
-export default AddWord;
+export default AddWordButton;
