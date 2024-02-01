@@ -4,7 +4,7 @@ const Definition = require("../models/definition");
 const QuestionSet = require("../models/questionSet");
 const getDefinition = require("../utils/getDefinition");
 const createQuestions = require("../utils/createQuestions");
-const io = require("../socket.js").getIO();
+const io = require("../utils/socket.js").getIO();
 
 const getPacks = async (req, res) => {
   const wordPacks = await WordPack.find();

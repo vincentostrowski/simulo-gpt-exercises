@@ -3,7 +3,7 @@ const Definition = require("../models/definition");
 const QuestionSet = require("../models/questionSet");
 const getDefinition = require("../utils/getDefinition");
 const createQuestions = require("../utils/createQuestions");
-const io = require("../socket.js").getIO();
+const io = require("../utils/socket.js").getIO();
 
 const createWord = async (req, res) => {
   //First check if user already has this word
@@ -95,21 +95,6 @@ const createWord = async (req, res) => {
   }
 };
 
-const getWords = async (req, res) => {
-  const words = await Word.find({ user: req.user._id });
-  res.status(200).json(words);
-};
-
-const getWordsPaginated = async (req, res) => {
-  const page = parseInt(req.query.page);
-  const pageSize = parseInt(req.query.pageSize)
-    .skip((page - 1) * pageSize)
-    .limit(pageSize);
-
-  const words = await Word.find({ user: req.user._id });
-  res.status(200).json(words);
-};
-
 const getDueWord = async (req, res) => {
   const word = await Word.findOne({
     $or: [
@@ -139,30 +124,6 @@ const getDueWord = async (req, res) => {
   }
 
   res.status(200).json({ word, questions, definitions });
-};
-
-const getQueuedNewWords = async (req, res) => {
-  const words = await Word.find({
-    user: req.user._id,
-    new: true,
-  }).sort({ newOrder: 1 });
-
-  res.status(200).json(words);
-};
-
-const getQueuedNewWordsPaginated = async (req, res) => {
-  const page = parseInt(req.query.page);
-  const pageSize = parseInt(req.query.pageSize);
-
-  const words = await Word.find({
-    user: req.user._id,
-    new: true,
-  })
-    .sort({ newOrder: 1 })
-    .skip((page - 1) * pageSize)
-    .limit(pageSize);
-
-  res.status(200).json(words);
 };
 
 const updateWord = async (req, res) => {
@@ -307,12 +268,8 @@ const getSearchResults = async (req, res) => {
 
 module.exports = {
   createWord,
-  getWords,
   getDueWord,
-  getQueuedNewWords,
   updateWord,
   deleteWord,
-  getWordsPaginated,
-  getQueuedNewWordsPaginated,
   getSearchResults,
 };
