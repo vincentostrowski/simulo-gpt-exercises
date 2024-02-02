@@ -27,3 +27,8 @@ Simulo is a full-stack web application for vocabulary learning through exercises
 ![image](https://github.com/vincentostrowski/simulo-gpt-exercises/assets/92182422/159f0840-eaad-407a-90ff-144dae2fbf67)
 ![image](https://github.com/vincentostrowski/simulo-gpt-exercises/assets/92182422/c72782cc-d11a-4396-919f-351267c96d0e)
 
+## Try it out: 
+https://gpt-vocab-exercise.vercel.app/ 
+
+### Important Notice About Load Times
+Please note that this project is hosted on a platform that automatically spins down the backend services during periods of inactivity. As a result, the initial load time may be longer than usual.
