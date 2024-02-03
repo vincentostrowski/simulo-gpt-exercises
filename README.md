@@ -2,8 +2,8 @@
 
 Simulo is a full-stack web application for vocabulary learning through exercises. Utilizing Node.js, Express, MongoDB, React, and integrating with ChatGPT and WordsAPI, exercises are generated for words input by users, and the interval for word reiteration is adaptively adjusted according to the user's feedback.
 
-![image](https://github.com/vincentostrowski/simulo-gpt-exercises/assets/92182422/e82801d5-9647-4c02-856b-cda52a76b539)
-![image](https://github.com/vincentostrowski/simulo-gpt-exercises/assets/92182422/c63ca394-21fb-4547-a67d-0eb35286e483)
+## Demo
+![simuloDemo](https://github.com/vincentostrowski/simulo-gpt-exercises/assets/92182422/086ac74e-a6be-45cc-bc19-adae44a2ca65)
 
 ## Technologies Used
 
